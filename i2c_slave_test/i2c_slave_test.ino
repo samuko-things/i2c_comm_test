@@ -133,6 +133,8 @@ void receiveDataEvent(int dataSizeInBytes)
   float checkVal = (float)address;
   if (dataSizeInBytes == 3)
   {
+    clearAllDataBuffer();
+
     dataBufferInBytes[0] = Wire.read(); // highbyte
     dataBufferInBytes[1] = Wire.read(); // lowbyte
 
@@ -140,7 +142,6 @@ void receiveDataEvent(int dataSizeInBytes)
 
     checkVal = filterGain;
     address = 0;
-    clearAllDataBuffer();
   }
 
   // Print to Serial Monitor
@@ -150,14 +151,13 @@ void receiveDataEvent(int dataSizeInBytes)
 
 void sendDataEvent()
 {
+  clearAllDataBuffer();
   // Setup byte variable in the correct size
   getData(address);
 
   // Send response back to Master
   // Wire.write(dataBufferInBytes, sizeof(dataBufferInBytes));
   Wire.write(dataBufferInBytes, 6);
-
-  clearAllDataBuffer();
 }
 //-----------------------------------------------------//
 
